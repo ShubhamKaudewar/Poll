@@ -1,0 +1,51 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+    <form id="ajaxform">
+        {% csrf_token %}
+        <label for="name">name:</label><br>
+        <input type="text" id="name" name="name"><br>
+        <label for="desc">desc:</label><br>
+        <input type="text" id="desc" name="desc"><br>
+        <label for="time">time</label><br>
+        <input type="text" id="time" name="time"><br>
+        <label for="views">time</label><br>
+        <input type="text" id="views" name="views"><br><br>
+        <input type="submit" value="Submit">
+      </form> 
+    
+    {% for each in content %}
+        {{ each.name }}
+        {{ each.time }}
+    {% endfor %}
+
+    {{ t }}
+</body>
+
+<script type="text/javascript">
+    $(document).on('submit','#ajaxform',function(e){
+        e.preventDefault();
+        $.ajax({
+            type:'POST',
+            url:'/user/',
+            data:{
+                name: $('name').val(),
+                desc: $('desc').val(),
+                time: $('time').val(),
+                views: $('views').val(),
+                csrfmiddlewaretoken: '{{ csrf_token }}'
+            },
+            success: function(){
+                alert("Success");
+            },
+        });
+    });
+</script>
+</html>
