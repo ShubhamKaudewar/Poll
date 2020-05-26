@@ -6,24 +6,40 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- BOOTSTRAP CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 </head>
 <body>
-    <form id="ajaxform">
+    <form id="ajaxform" class="p-5 ">
         {% csrf_token %}
-        <label for="name">name:</label><br>
-        <input type="text" id="name" name="name"><br>
-        <label for="desc">desc:</label><br>
-        <input type="text" id="desc" name="desc"><br>
-        <label for="time">time</label><br>
-        <input type="text" id="time" name="time"><br>
-        <label for="views">time</label><br>
-        <input type="text" id="views" name="views"><br><br>
-        <input type="submit" value="Submit">
-      </form> 
+        <div class="form-group">
+          <label for="Name">Name: </label>
+          <input type="text" class="form-control" id="name" placeholder="Enter Name">
+        </div>
+        <div class="form-group">
+          <label for="exampleFormControlTextarea1">Description: </label>
+          <textarea class="form-control" id="desc" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">PUBLISH</button>
+      </form>
     
-      <div id="content">
+      <div id="content" class="container">
         {% for each in content reversed %}
-            {{ each.name }}<br>
+        <div class="col-12 d-flex flex-column mb-3 p-5 shadow-none bg-light rounded">
+            <div class="d-flex flex-row justify-content-between">
+                <h6><span class="text-primary font-weight-bold">Name: </span>{{ each.name }}</h6>
+                <h6><span class="text-primary font-weight-bold">Post No. </span> {{ each.id }}</h6>
+            </div>
+            <div>
+                <h6><span class="text-primary font-weight-bold">Posted: </span> {{ each.time }}</h6>
+            </div>
+            <div class="d-flex flex-column"><br>
+                <h6 class="text-primary font-weight-bold">Description:</h6>
+                <p>{{ each.desc }}</p>
+            </div>
+        </div>
         {% endfor %}
     </div>
 </body>
@@ -37,8 +53,6 @@
             data:{
                 name: $('#name').val(),
                 desc: $('#desc').val(),
-                time: $('#time').val(),
-                views: $('#views').val(),
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
             success: function(data){

@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from front.models import Values
 from django.http import HttpResponse
+from datetime import datetime
 
 # Create your views here.
 def Values_view(request):
@@ -14,13 +15,11 @@ def Create(request):
     if request.method == 'POST':
         name = request.POST.get('name')
         desc = request.POST.get('desc')
-        time = request.POST.get('time')
-        view = request.POST.get('views')
 
         Values.objects.create(
             name = name,
             desc = desc,
-            time = time,
-            view = view
+            time = datetime.now(),
+            view = ""
         )
         return HttpResponse('')
