@@ -10,12 +10,12 @@ def Values_view(request):
     }
     return render(request,"front/index.html",views_content)
 
-def create_user(request):
+def Create(request):
     if request.method == 'POST':
-        name = request.POST['name']
-        desc = request.POST['desc']
-        time = request.POST['time']
-        view = request.POST['views']
+        name = request.POST.get('name')
+        desc = request.POST.get('desc')
+        time = request.POST.get('time')
+        view = request.POST.get('views')
 
         Values.objects.create(
             name = name,

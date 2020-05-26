@@ -21,12 +21,11 @@
         <input type="submit" value="Submit">
       </form> 
     
-    {% for each in content %}
-        {{ each.name }}
-        {{ each.time }}
-    {% endfor %}
-
-    {{ t }}
+      <div id="content">
+        {% for each in content reversed %}
+            {{ each.name }}<br>
+        {% endfor %}
+    </div>
 </body>
 
 <script type="text/javascript">
@@ -36,14 +35,14 @@
             type:'POST',
             url:'/user/',
             data:{
-                name: $('name').val(),
-                desc: $('desc').val(),
-                time: $('time').val(),
-                views: $('views').val(),
+                name: $('#name').val(),
+                desc: $('#desc').val(),
+                time: $('#time').val(),
+                views: $('#views').val(),
                 csrfmiddlewaretoken: '{{ csrf_token }}'
             },
-            success: function(){
-                alert("Success");
+            success: function(data){
+                $("#content").load(" #content");
             },
         });
     });
